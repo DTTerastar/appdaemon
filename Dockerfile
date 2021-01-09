@@ -19,14 +19,10 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install timezone data
-RUN apk add tzdata
+RUN apt-get update && apt-get install -y tzdata curl
 
 # Install dependencies
-RUN apk add --no-cache build-base gcc libffi-dev openssl-dev musl-dev cargo \
-    && pip install --no-cache-dir .
-
-# Install additional packages
-RUN apk add --no-cache curl
+RUN pip install --no-cache-dir .
 
 # Start script
 RUN chmod +x /usr/src/app/dockerStart.sh
